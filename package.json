@@ -2,9 +2,10 @@
   "name": "desafio-api-node",
   "version": "1.0.0",
   "description": "Rocketseat - Desafio API node.js",
-  "main": "index.js",
+  "main": "src/server.ts",
+  "type": "module",
   "scripts": {
-    "dev": "node --watch server.ts"
+    "dev": "node --watch src/server.ts"
   },
   "author": "Kaique Lima",
   "license": "ISC",
