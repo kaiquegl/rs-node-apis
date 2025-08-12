@@ -1,0 +1,21 @@
+{
+  "name": "desafio-api-node",
+  "version": "1.0.0",
+  "description": "Rocketseat - Desafio API node.js",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch server.ts"
+  },
+  "author": "Kaique Lima",
+  "license": "ISC",
+  "dependencies": {
+    "fastify": "5.5.0",
+    "pino-pretty": "13.1.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.1.2",
+    "@types/node": "24.2.1",
+    "typescript": "5.9.2",
+    "ultracite": "5.1.2"
+  }
+}
