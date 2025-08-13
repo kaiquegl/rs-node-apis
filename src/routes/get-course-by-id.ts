@@ -33,7 +33,7 @@ export const getCourseByIdRoute: FastifyPluginCallbackZod = (server) => {
 			const result = await db.select().from(courses).where(eq(courses.id, courseId));
 
 			if (result.length > 0) {
-				return { course: result[0] };
+				return reply.status(200).send({ course: result[0] });
 			}
 
 			return reply.status(404).send();

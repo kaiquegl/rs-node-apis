@@ -11,6 +11,7 @@ import {
 import { createCourseRoute } from "./routes/create-course.ts";
 import { getCourseByIdRoute } from "./routes/get-course-by-id.ts";
 import { getCoursesRoute } from "./routes/get-courses.ts";
+import { env } from "./utils/env.ts";
 
 const server = fastify({
 	logger: {
@@ -24,7 +25,7 @@ const server = fastify({
 	},
 }).withTypeProvider<ZodTypeProvider>();
 
-if (process.env.NODE_ENV === "development") {
+if (env.NODE_ENV === "development") {
 	server.register(fastifySwagger, {
 		openapi: {
 			info: {
