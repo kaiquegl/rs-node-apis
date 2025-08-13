@@ -49,30 +49,22 @@ Servidor em: `http://localhost:3333`
 Em modo `development`, a documentação interativa fica disponível em:
 - `http://localhost:3333/docs`
 
-## Rotas
-Base URL: `http://localhost:3333`
+## Fluxo da Aplicação
 
-- Criar curso
-  - Método: `POST /courses`
-  - Body:
-    ```json
-    { "title": "Curso de Docker" }
-    ```
-  - Respostas:
-    - 201: `{ "courseId": "uuid" }`
-
-- Listar cursos
-  - Método: `GET /courses`
-  - Respostas:
-    - 200: `{ "courses": [{ "id": "uuid", "title": "string" }] }`
-
-- Buscar curso por ID
-  - Método: `GET /courses/:id`
-  - Respostas:
-    - 200: `{ "course": { "id": "uuid", "title": "string", "description": "string|null" } }`
-    - 404: vazio
-
-Você pode testar rapidamente com o arquivo `http/requests.http` (extensão REST Client no VS Code/Cursor) ou via cURL/Postman.
+```mermaid
+flowchart TD
+  A["Cliente"] -->|HTTP| B["Fastify (Server)"]
+  B --> C{"Zod validação"}
+  C -- inválido --> H["400/422 (Erro de validação)"]
+  C -- ok --> D["Rota / Controller"]
+  D --> E["Drizzle ORM"]
+  E --> F["PostgreSQL"]
+  F --> E
+  E --> G["Resposta 200/201/404"]
+  G --> I["Cliente"]
+  H --> I
+  B -. dev .-> J["Swagger + Scalar (/docs)"]
+```
 
 ## Scripts
 Disponíveis em `package.json`:
