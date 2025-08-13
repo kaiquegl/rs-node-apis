@@ -1,5 +1,16 @@
-import crypto from "node:crypto";
+import { fastifySwagger } from "@fastify/swagger";
+import scalarAPIReference from "@scalar/fastify-api-reference";
 import fastify from "fastify";
+import {
+	jsonSchemaTransform,
+	serializerCompiler,
+	validatorCompiler,
+	type ZodTypeProvider,
+} from "fastify-type-provider-zod";
+
+import { createCourseRoute } from "./routes/create-course.ts";
+import { getCourseByIdRoute } from "./routes/get-course-by-id.ts";
+import { getCoursesRoute } from "./routes/get-courses.ts";
 
 const server = fastify({
 	logger: {
@@ -11,55 +22,32 @@ const server = fastify({
 			},
 		},
 	},
-});
+}).withTypeProvider<ZodTypeProvider>();
 
-const courses = [
-	{ id: "1", title: "Curso de Node.js" },
-	{ id: "2", title: "Curso de React" },
-	{ id: "3", title: "Curso de React Native" },
-];
+if (process.env.NODE_ENV === "development") {
+	server.register(fastifySwagger, {
+		openapi: {
+			info: {
+				title: "Desafio Node.js",
+				version: "1.0.0",
+			},
+		},
+		transform: jsonSchemaTransform,
+	});
 
-server.get("/courses", (_, reply) => {
-	return reply.send({ courses });
-});
+	server.register(scalarAPIReference, {
+		routePrefix: "/docs",
+	});
+}
 
-server.get("/courses/:id", (request, reply) => {
-	type Params = {
-		id: string;
-	};
+server.setValidatorCompiler(validatorCompiler);
+server.setSerializerCompiler(serializerCompiler);
 
-	const params = request.params as Params;
-	const courseId = params.id;
-
-	const course = courses.find((c) => c.id === courseId);
-
-	if (course) {
-		return { course };
-	}
-
-	return reply.status(404).send();
-});
-
-server.post("/courses", (request, reply) => {
-	type Body = {
-		title: string;
-	};
-
-	const courseId = crypto.randomUUID();
-
-	const body = request.body as Body;
-	const courseTitle = body.title;
-
-	if (!courseTitle) {
-		return reply.status(400).send({ message: "Título obrigatório." });
-	}
-
-	courses.push({ id: courseId, title: courseTitle });
-
-	return reply.status(201).send({ courseId });
-});
+server.register(createCourseRoute);
+server.register(getCourseByIdRoute);
+server.register(getCoursesRoute);
 
 server.listen({ port: 3333 }).then(() => {
-	// biome-ignore lint/suspicious/noConsole: Notify the user that the server is running
+	// biome-ignore lint/suspicious/noConsole: start server
 	console.log("HTTP server running!");
 });
