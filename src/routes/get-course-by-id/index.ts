@@ -2,8 +2,8 @@ import { eq } from "drizzle-orm";
 import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
 import z from "zod";
 
-import { db } from "../database/client.ts";
-import { courses } from "../database/schema.ts";
+import { db } from "../../database/client.ts";
+import { courses } from "../../database/schema.ts";
 
 export const getCourseByIdRoute: FastifyPluginCallbackZod = (server) => {
 	server.get(
