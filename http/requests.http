@@ -1,14 +1,27 @@
 POST http://localhost:3333/courses
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNGI2NzIzOS1jNjY0LTRjNDUtYWVmYy1iZjJmNzQwMmFjMTgiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc1NTU0NjU0OX0.vB7ahIqMdfTk1J838xhImfQfwSmAERe6ioua65lL9m0
 
 {
-  "title": "Curso de Docker"
+  "title": "Curso de React"
 }
 
 ###
 
 GET http://localhost:3333/courses?orderBy=title
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNGI2NzIzOS1jNjY0LTRjNDUtYWVmYy1iZjJmNzQwMmFjMTgiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc1NTU0NjU0OX0.vB7ahIqMdfTk1J838xhImfQfwSmAERe6ioua65lL9m0
 
 ###
 
-GET http://localhost:3333/courses/027a49a3-0c7e-441e-a1d6-4ec797c13306
+GET http://localhost:3333/courses/032d6868-a1c3-4acc-8ff3-0b9f3c046c01
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNGI2NzIzOS1jNjY0LTRjNDUtYWVmYy1iZjJmNzQwMmFjMTgiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc1NTU0NjU0OX0.vB7ahIqMdfTk1J838xhImfQfwSmAERe6ioua65lL9m0
+
+###
+
+POST http://localhost:3333/sessions
+Content-Type: application/json
+
+{
+  "email": "Silas_Macedo@yahoo.com",
+  "password": "123456"
+}

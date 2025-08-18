@@ -3,11 +3,14 @@ import z from "zod";
 
 import { db } from "../../database/client.ts";
 import { courses } from "../../database/schema.ts";
+import { checkRequestJWT } from "../hooks/check-request-jwt.ts";
+import { checkUserRole } from "../hooks/check-user-role.ts";
 
 export const createCourseRoute: FastifyPluginCallbackZod = (server) => {
 	server.post(
 		"/courses",
 		{
+			preHandler: [checkRequestJWT, checkUserRole("manager")],
 			schema: {
 				tags: ["courses"],
 				summary: "Create a course",
